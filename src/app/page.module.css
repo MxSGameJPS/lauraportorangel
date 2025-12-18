@@ -89,3 +89,35 @@
   background-color: var(--accent); /* Using accent color as bg */
   background: linear-gradient(180deg, var(--background) 0%, #fdf6e3 100%);
 }
+
+@media (max-width: 760px) {
+  .section {
+    padding: 3rem 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center; /* Enforce centering */
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center; /* Center cards horizontally */
+    margin: 0 auto;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .grid > * {
+    width: 100%;
+    max-width: 380px; /* Optimal reading width for cards */
+    margin: 0 auto;
+  }
+
+  .bookCoverWrapper {
+    height: 20rem; /* Slightly taller for better vertical presentation */
+  }
+}
