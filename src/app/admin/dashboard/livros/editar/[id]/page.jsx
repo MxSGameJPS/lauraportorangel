@@ -1,28 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { CldUploadWidget } from "next-cloudinary";
 import { useRouter } from "next/navigation";
-// As we moved the file, we can't easily import css module from parent unless we adjust path
-// Simplest is to copy styles or use relative path if it was not a copy.
-// Let's create a local styles reference assuming we might want to copy/paste the css later or just use inline for now or
-// actually better: import the CSS module from the parent listing page if possible or duplicate it.
-// Since modules are scoped, we should probably duplicate or move the css.
-// Let's assume we use the same css file from parent if we can import it, but standard is to have collocated css.
-// I will create a simple CSS here since I can't easily reference ".." module in Next.js safely without knowing resolver.
-// Wait, I can just use classes. But let's write a new module for "manage-form" and reuse it.
-// For speed, let's keep it simple and just update content.
+// ... imports
 
-// I'll assume we duplicate the CSS for now for "novo" and "editar" or use a shared one.
-// Actually, I'll update the original css to be shared or just create new ones.
-// Let's update this file to be the EDIT form.
-
-import styles from "../../page.module.css"; // Importing from list page which we will overwrite, so this is risky.
-// Let's pretend I'll create the list page next with new styles.
+import styles from "../../page.module.css";
 
 export default function EditBook({ params }) {
   const router = useRouter();
-  const { id } = params; // Params are passed as props in Next.js 13+ app dir (wait, params is a promise in newer versions? No, in simple page it's prop)
+  const { id } = use(params);
   // Check Next.js version. User has 16.0.10. Params need to be awaited or used directly?
   // In Next.js 15+, params is async.
   // We can use React.use() to unwrap it if needed, or just standard useEffect.

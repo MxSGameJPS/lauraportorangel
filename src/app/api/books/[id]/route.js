@@ -4,8 +4,9 @@ import { prisma } from "@/lib/db";
 // GET a specific book (for editing)
 export async function GET(request, { params }) {
   try {
+    const { id } = await params;
     const book = await prisma.book.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
     if (!book)
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
@@ -18,6 +19,7 @@ export async function GET(request, { params }) {
 // PUT (Update) a book
 export async function PUT(request, { params }) {
   try {
+    const { id } = await params;
     const data = await request.json();
 
     // Convert price string to float if present
@@ -27,7 +29,7 @@ export async function PUT(request, { params }) {
       : undefined;
 
     const updatedBook = await prisma.book.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title: data.title,
         description: data.description,
@@ -48,8 +50,9 @@ export async function PUT(request, { params }) {
 // DELETE a book
 export async function DELETE(request, { params }) {
   try {
+    const { id } = await params;
     await prisma.book.delete({
-      where: { id: params.id },
+      where: { id },
     });
     return NextResponse.json({ message: "Book deleted" });
   } catch (error) {

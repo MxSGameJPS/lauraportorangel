@@ -4,8 +4,9 @@ import { prisma } from "@/lib/db";
 // GET a specific event
 export async function GET(request, { params }) {
   try {
+    const { id } = await params;
     const event = await prisma.event.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
     if (!event)
       return NextResponse.json({ error: "Event not found" }, { status: 404 });
@@ -21,10 +22,11 @@ export async function GET(request, { params }) {
 // PUT (Update) an event
 export async function PUT(request, { params }) {
   try {
+    const { id } = await params;
     const data = await request.json();
 
     const updatedEvent = await prisma.event.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title: data.title,
         description: data.description,
@@ -47,8 +49,9 @@ export async function PUT(request, { params }) {
 // DELETE an event
 export async function DELETE(request, { params }) {
   try {
+    const { id } = await params;
     await prisma.event.delete({
-      where: { id: params.id },
+      where: { id },
     });
     return NextResponse.json({ message: "Event deleted" });
   } catch (error) {

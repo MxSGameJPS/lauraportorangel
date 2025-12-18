@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 // To reuse styles, we can just copy them to page.module.css inside this folder or reference
 // For simplicity, assuming user might have issues with relative paths in css modules if structure changes,
@@ -9,7 +9,7 @@ import styles from "../../page.module.css";
 
 export default function EditEvent({ params }) {
   const router = useRouter();
-  const { id } = params;
+  const { id } = use(params);
 
   const [formData, setFormData] = useState({
     title: "",
