@@ -74,3 +74,70 @@
   font-weight: 700;
   color: var(--primary);
 }
+
+@media (max-width: 760px) {
+  .eventHeader {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tableFull,
+  .tableFull thead,
+  .tableFull tbody,
+  .tableFull th,
+  .tableFull td,
+  .tableFull tr {
+    display: block;
+  }
+
+  .tableFull thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .tableFull tr {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #fafafa;
+  }
+
+  .tableFull td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .tableFull td:last-child {
+    border-bottom: none;
+  }
+
+  .tableFull td::before {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: var(--primary);
+  }
+
+  .tableFull td:nth-of-type(1)::before {
+    content: "Nome";
+  }
+  .tableFull td:nth-of-type(2)::before {
+    content: "Acompanhantes";
+  }
+  .tableFull td:nth-of-type(3)::before {
+    content: "Total";
+  }
+  .tableFull td:nth-of-type(4)::before {
+    content: "Contato";
+  }
+}
