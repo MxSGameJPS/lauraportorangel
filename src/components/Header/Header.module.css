@@ -1,0 +1,89 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  background: rgba(253, 251, 247, 0.85); /* Semi-transparent paper background */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(74, 44, 42, 0.1);
+}
+
+.brand {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand span {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  margin-top: 0.2rem;
+  color: var(--foreground);
+}
+
+.nav {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.navLink {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.navLink:hover {
+  color: var(--primary);
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.mobileButton {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none; /* Mobile menu to be implemented if needed */
+  }
+  .mobileButton {
+    display: block;
+  }
+}

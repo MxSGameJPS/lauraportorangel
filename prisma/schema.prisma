@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Book {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  coverImage  String   // Stores Cloudinary public_id or full URL
+  releaseDate DateTime
+  purchaseLink String?
+  price       Decimal? @db.Decimal(10, 2)
+  highlight   Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  type        String   // "Lançamento", "Encontro", etc.
+  imageUrl    String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  guests      Guest[]
+}
+
+model Guest {
+  id          String   @id @default(cuid())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name        String
+  companions  Int      @default(0) // Quantidade de acompanhantes
+  phone       String
+  
+  createdAt   DateTime @default(now())
+}
