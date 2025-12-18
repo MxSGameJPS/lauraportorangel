@@ -1,153 +1,84 @@
-"use client";
+import Link from "next/link";
+import { prisma } from "@/lib/db";
+import styles from "./list.module.css";
+import DeleteButton from "./DeleteButton";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
+export const revalidate = 0;
 
-export default function ManageAgenda() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    time: "",
-    location: "",
-    type: "Encontro", // Default
+export default async function EventsList() {
+  const events = await prisma.event.findMany({
+    orderBy: { date: "desc" },
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Combine date and time
-      const datetime = new Date(`${formData.date}T${formData.time}`);
-
-      const payload = {
-        title: formData.title,
-        description: formData.description,
-        date: datetime.toISOString(),
-        location: formData.location,
-        type: formData.type,
-      };
-
-      const res = await fetch("/api/events", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        alert("Evento agendado com sucesso!");
-        router.push("/agenda");
-      } else {
-        alert("Erro ao agendar evento.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Erro inesperado.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Agendar Compromisso</h1>
+    <div className={styles.listContainer}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Gerenciar Agenda</h1>
+        <Link href="/admin/dashboard/agenda/novo" className={styles.addBtn}>
+          + Novo Evento
+        </Link>
+      </div>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Título do Evento</label>
-          <input
-            type="text"
-            className={styles.input}
-            value={formData.title}
-            onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
-            }
-            required
-            placeholder="Ex: Tarde de Autógrafos"
-          />
+      {events.length === 0 ? (
+        <div className="text-center py-12 text-gray-500">
+          Nenhum evento agendado. Clique em "+ Novo Evento" para começar.
         </div>
+      ) : (
+        <div className={styles.grid}>
+          {events.map((event) => (
+            <div key={event.id} className={styles.itemCard}>
+              <div className={styles.itemInfo}>
+                <div
+                  className={styles.dateBox}
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    borderRadius: "8px",
+                    background: "var(--accent)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "var(--primary)",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <span style={{ fontSize: "0.8rem" }}>
+                    {new Date(event.date).getDate()}
+                  </span>
+                  <span style={{ fontSize: "0.7rem" }}>
+                    {new Date(event.date)
+                      .toLocaleDateString("pt-BR", { month: "short" })
+                      .toUpperCase()
+                      .replace(".", "")}
+                  </span>
+                </div>
+                <div className={styles.itemDetails}>
+                  <h3>{event.title}</h3>
+                  <p className={styles.itemMeta}>
+                    {new Date(event.date).toLocaleTimeString("pt-BR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    • {event.location} •{" "}
+                    <span className="text-[var(--primary)]">{event.type}</span>
+                  </p>
+                </div>
+              </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Tipo de Evento</label>
-          <select
-            className={styles.select}
-            value={formData.type}
-            onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-          >
-            <option value="Encontro">Encontro / Café</option>
-            <option value="Lançamento">Lançamento de Livro</option>
-            <option value="Palestra">Palestra / Workshop</option>
-            <option value="Feira">Feira Literária</option>
-          </select>
+              <div className={styles.actions}>
+                <Link
+                  href={`/admin/dashboard/agenda/editar/${event.id}`}
+                  className={styles.editBtn}
+                >
+                  Editar
+                </Link>
+                <DeleteButton id={event.id} type="event" />
+              </div>
+            </div>
+          ))}
         </div>
-
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Descrição</label>
-          <textarea
-            className={styles.textarea}
-            value={formData.description}
-            onChange={(e) =>
-              setFormData({ ...formData, description: e.target.value })
-            }
-            required
-            placeholder="Detalhes sobre o evento..."
-          />
-        </div>
-
-        <div className={styles.row}>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Data</label>
-            <input
-              type="date"
-              className={styles.input}
-              value={formData.date}
-              onChange={(e) =>
-                setFormData({ ...formData, date: e.target.value })
-              }
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label className={styles.label}>Horário</label>
-            <input
-              type="time"
-              className={styles.input}
-              value={formData.time}
-              onChange={(e) =>
-                setFormData({ ...formData, time: e.target.value })
-              }
-              required
-            />
-          </div>
-        </div>
-
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Local</label>
-          <input
-            type="text"
-            className={styles.input}
-            value={formData.location}
-            onChange={(e) =>
-              setFormData({ ...formData, location: e.target.value })
-            }
-            required
-            placeholder="Ex: Livraria da Vila - Fradique"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className={styles.submitBtn}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Agendando..." : "Confirmar Evento"}
-        </button>
-      </form>
+      )}
     </div>
   );
 }

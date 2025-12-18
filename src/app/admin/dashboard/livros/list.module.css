@@ -1,0 +1,128 @@
+.listContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 0;
+}
+
+.addBtn {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.addBtn:hover {
+  background-color: var(--secondary);
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.itemCard {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+}
+
+.itemInfo {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.thumbWrapper {
+  position: relative;
+  width: 60px;
+  height: 90px;
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.thumbImage {
+  object-fit: cover;
+}
+
+.noThumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.itemDetails h3 {
+  font-size: 1.25rem;
+  color: var(--foreground);
+  margin-bottom: 0.25rem;
+  font-family: var(--font-serif);
+}
+
+.itemMeta {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.editBtn,
+.deleteBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.editBtn {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.editBtn:hover {
+  background-color: #e5e7eb;
+}
+
+.deleteBtn {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.deleteBtn:hover {
+  background-color: #fecaca;
+}
