@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CldUploadWidget } from "next-cloudinary";
-import styles from "./page.module.css";
+import styles from "../../page.module.css";
 import { useRouter } from "next/navigation";
 
 export default function ManageBooks() {
