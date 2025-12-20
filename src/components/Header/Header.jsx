@@ -10,7 +10,7 @@ export default function Header() {
     <header className={styles.header}>
       <Link href="/" className={styles.brand}>
         Laura Porto Rangel
-        <span>ESCRITORA</span>
+        <span>PSICOPEDAGOGA E ESCRITORA</span>
       </Link>
 
       <nav className={`${styles.nav} ${isOpen ? styles.open : ""}`}>
