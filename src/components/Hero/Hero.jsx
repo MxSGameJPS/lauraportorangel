@@ -7,7 +7,7 @@ export default function Hero() {
 
       <div className={styles.content}>
         <span className={styles.subtitle}>
-          Escritora & Contadora de Histórias
+          Psicopedagoga, Escritora & Cordenadora de das rodas de Leitura
         </span>
         <h1 className={styles.title}>Laura Porto Rangel</h1>
         <p className={styles.description}>
